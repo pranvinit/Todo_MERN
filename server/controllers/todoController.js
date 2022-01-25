@@ -6,6 +6,7 @@ const getAllTodos = async (req, res) => {
   res.status(StatusCodes.OK).json({ todos, nbHits: todos.length });
 };
 
+// only accessible to authenticated users
 const getSingleTodo = async (req, res) => {
   const { id: todoId } = req.params;
   const todo = await Todo.findOne({ _id: todoId });
