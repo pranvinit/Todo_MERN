@@ -6,7 +6,9 @@ const register = async (req, res) => {
   const { email, name, password } = req.body;
   const emailAlreadyExists = await User.findOne({ email });
   if (emailAlreadyExists) {
-    res.status(StatusCodes.BAD_REQUEST).json({ msg: "email already exist" });
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "email already exist" });
   }
 
   const user = await User.create({ name, email, password });
@@ -20,18 +22,22 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide email and password" });
   }
   const user = await User.findOne({ email });
   if (!user) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Invalid Credentials" });
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "Invalid Credentials" });
   }
   // Instance method on the user schema
   const isPasswordCorrect = await user.comparePassword(password);
   if (!isPasswordCorrect) {
-    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Invalid Credentials" });
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "Invalid Credentials" });
   }
   const tokenUser = createTokenUser(user);
   // creating JWT token and attaching it to the response

@@ -11,7 +11,7 @@ const getSingleTodo = async (req, res) => {
   const { id: todoId } = req.params;
   const todo = await Todo.findOne({ _id: todoId });
   if (!todo) {
-    res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
+    return res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
   }
   res.status(StatusCodes.OK).json({ todo });
 };
@@ -19,7 +19,7 @@ const getSingleTodo = async (req, res) => {
 const createTodo = async (req, res) => {
   const { name, description } = req.body;
   if (!name || !description) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide all the values" });
   }
@@ -33,7 +33,7 @@ const updateTodo = async (req, res) => {
   const { id: todoId } = req.params;
   const { name, description, completed } = req.body;
   if (!name || !description) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "Please provide all the values" });
   }
@@ -52,7 +52,7 @@ const deleteTodo = async (req, res) => {
   const { id: todoId } = req.params;
   const todo = await Todo.findOneAndDelete({ _id: todoId });
   if (!todo) {
-    res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
+    return res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
   }
   res
     .status(StatusCodes.OK)
