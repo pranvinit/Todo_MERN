@@ -3,8 +3,8 @@ import styles from "./Common.module.css";
 
 const Footer = () => {
   return (
-    <div>
-      <h1>this is the footer of the application</h1>
+    <div className={styles.footer}>
+      <span>&copy; 2022 TODO All rights reserved.</span>
     </div>
   );
 };

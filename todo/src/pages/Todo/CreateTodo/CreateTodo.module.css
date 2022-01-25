@@ -1,0 +1,33 @@
+.alertContainer {
+  margin: 25px 0;
+}
+.todoFormContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 80vh;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f8;
+}
+
+.todoForm {
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  width: 40%;
+  padding: 20px;
+  border-radius: 10px;
+  justify-content: space-evenly;
+  background: #fff;
+}
+.todoForm > span {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 600;
+}
+.formOptions {
+  display: flex;
+  justify-content: center;
+}

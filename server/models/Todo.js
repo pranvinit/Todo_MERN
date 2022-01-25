@@ -6,7 +6,7 @@ const TodoSchema = mongoose.Schema(
       type: String,
       required: [true, "please provide name"],
       trim: true,
-      maxlength: [20, "name can not exceed 20 characters"],
+      maxlength: [50, "name can not exceed 50 characters"],
     },
     description: {
       type: String,

@@ -9,8 +9,12 @@ const SingleTodo = ({ name, description, completed, _id }) => {
     <Link to={`/todo/${_id}`} className={styles.todoLink}>
       <div className={styles.todo}>
         <span>{name}</span>
-        <span>{description}</span>
-        <span>{completed.toString()}</span>
+        <div>
+          <span>{description}</span>
+          <span id={styles.todoStatus}>
+            status: {completed ? "completed" : "not completed"}
+          </span>
+        </div>
       </div>
     </Link>
   );

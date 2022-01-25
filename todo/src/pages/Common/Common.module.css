@@ -1,0 +1,40 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 10vh;
+  background-color: #222;
+}
+.footer span,
+.navbar span {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 10vh;
+  background-color: #222;
+}
+.logoContainer {
+  height: 70%;
+  margin: 0 10px;
+}
+.logoContainer img {
+  height: 100%;
+  cursor: pointer;
+}
+
+.footer span {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+}

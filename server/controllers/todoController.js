@@ -2,7 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const Todo = require("../models/Todo");
 
 const getAllTodos = async (req, res) => {
-  const todos = await Todo.find({});
+  const todos = await Todo.find({}).sort("-updatedAt");
   res.status(StatusCodes.OK).json({ todos, nbHits: todos.length });
 };
 
@@ -12,7 +12,7 @@ const getSingleTodo = async (req, res) => {
   if (!todo) {
     res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
   }
-  res.status(StatusCodes.OK).json(todo);
+  res.status(StatusCodes.OK).json({ todo });
 };
 
 const createTodo = async (req, res) => {
@@ -20,17 +20,21 @@ const createTodo = async (req, res) => {
   if (!name || !description) {
     res
       .status(StatusCodes.BAD_REQUEST)
-      .json("Please provide both name and description");
+      .json({ msg: "Please provide all the values" });
   }
   const todo = await Todo.create({ name, description });
-  res.status(StatusCodes.CREATED).json(todo);
+  res
+    .status(StatusCodes.CREATED)
+    .json({ todo, msg: "TODO created successfully" });
 };
 
 const updateTodo = async (req, res) => {
   const { id: todoId } = req.params;
   const { name, description, completed } = req.body;
-  if (!name || !description || !completed) {
-    res.status(StatusCodes.BAD_REQUEST).json("Please provide all the values");
+  if (!name || !description) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "Please provide all the values" });
   }
   const todo = await Todo.findOneAndUpdate(
     { _id: todoId },
@@ -40,7 +44,7 @@ const updateTodo = async (req, res) => {
       new: true,
     }
   );
-  res.status(StatusCodes.OK).json(todo);
+  res.status(StatusCodes.OK).json({ todo, msg: "TODO updated successfully" });
 };
 
 const deleteTodo = async (req, res) => {
@@ -49,7 +53,9 @@ const deleteTodo = async (req, res) => {
   if (!todo) {
     res.status(StatusCodes.NOT_FOUND).json(`No TODO with id : ${id}`);
   }
-  res.status(StatusCodes.NO_CONTENT).json("TODO deleted succesfully");
+  res
+    .status(StatusCodes.OK)
+    .json({ msg: "TODO deleted succesfully, redirecting.." });
 };
 
 module.exports = {

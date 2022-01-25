@@ -1,4 +1,13 @@
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+.container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 10vh 0;
 }
