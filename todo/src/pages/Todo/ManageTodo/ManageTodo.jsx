@@ -4,18 +4,10 @@ import axios from "axios";
 
 // alert import
 import AsyncAlert from "../../../utils/AsyncAlert";
+import { Spinner } from "../../../components/spinner/Spinner";
 
 // react-router imports
 import { useParams, useNavigate } from "react-router-dom";
-
-// material-ui imports
-import {
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Button,
-  CircularProgress,
-} from "@mui/material";
 
 const ManageTodo = () => {
   const [todo, setTodo] = useState({});
@@ -43,10 +35,10 @@ const ManageTodo = () => {
     }));
   };
 
-  const handleComplete = () => {
+  const handleStatus = ({ target }) => {
     setTodo((prev) => ({
       ...prev,
-      completed: !todo.completed,
+      completed: target.checked,
     }));
   };
 
@@ -104,7 +96,7 @@ const ManageTodo = () => {
   if (loading) {
     return (
       <div className={styles.centered}>
-        <CircularProgress />
+        <Spinner />
       </div>
     );
   }
@@ -120,43 +112,24 @@ const ManageTodo = () => {
       </div>
       <form className={styles.todoForm}>
         <span>Update or delete todo</span>
-        <TextField
-          fullWidth
-          label="NAME"
-          name="name"
-          variant="outlined"
-          onChange={handleChange}
-          value={todo.name}
-        />
-        <TextField
-          fullWidth
-          label="DESCRIPTION"
+        <input name="name" onChange={handleChange} value={todo.name} />
+        <textarea
           name="description"
-          variant="outlined"
           onChange={handleChange}
           value={todo.description}
-        />
-        <FormControlLabel
-          control={<Checkbox checked={todo.completed} />}
-          label="COMPLETED"
-          onClick={handleComplete}
-        />
+        ></textarea>
+        <div className="checkboxWrapper">
+          <label htmlFor="status">Status</label>
+          <input
+            id="status"
+            type="checkbox"
+            defaultChecked={!!todo.completed}
+            onClick={handleStatus}
+          />
+        </div>
         <div className={styles.formOptions}>
-          <Button
-            variant="outlined"
-            color="error"
-            sx={{ width: 200, mx: 3 }}
-            onClick={handleDelete}
-          >
-            delete
-          </Button>
-          <Button
-            variant="outlined"
-            sx={{ width: 200, mx: 3 }}
-            onClick={handleUpdate}
-          >
-            update
-          </Button>
+          <button onClick={handleDelete}>delete</button>
+          <button onClick={handleUpdate}>update</button>
         </div>
       </form>
     </div>

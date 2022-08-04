@@ -6,26 +6,14 @@ import TodoList from "../../containers/TodoList/TodoList";
 
 // react-router imports
 import { useNavigate } from "react-router-dom";
-
-// material-ui imports
-import { Fab } from "@mui/material";
-import { Add } from "@mui/icons-material";
-
 const Home = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <span className={styles.heading}>your todos</span>
+      <h2 className={styles.heading}>Your Todos</h2>
       <TodoList />
-      <div id={styles.fabContainer}>
-        <Fab
-          color="primary"
-          aria-label="add"
-          sx={{ width: "5rem", height: "5rem" }}
-          onClick={() => navigate("/todo/create")}
-        >
-          <Add fontSize="large" />
-        </Fab>
+      <div id={styles.create} onClick={() => navigate("/todo/create")}>
+        <img src="assets/add.png" alt="add" />
       </div>
     </div>
   );

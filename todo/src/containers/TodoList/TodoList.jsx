@@ -4,8 +4,8 @@ import axios from "axios";
 
 // importing todo page
 import SingleTodo from "../SingleTodo/SingleTodo";
-// material-ui imports
-import { CircularProgress } from "@mui/material";
+// importing components
+import { Spinner } from "../../components/spinner/Spinner";
 
 const TodoList = () => {
   const [todos, setTodos] = useState([]);
@@ -28,7 +28,7 @@ const TodoList = () => {
   if (loading) {
     return (
       <div className={styles.centered}>
-        <CircularProgress />
+        <Spinner />
       </div>
     );
   }

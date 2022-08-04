@@ -8,9 +8,6 @@ import AsyncAlert from "../../../utils/AsyncAlert";
 // react-router imports
 import { useNavigate } from "react-router-dom";
 
-// material-ui imports
-import { TextField, Checkbox, FormControlLabel, Button } from "@mui/material";
-
 const CreateTodo = () => {
   const [todo, setTodo] = useState({});
 
@@ -50,10 +47,10 @@ const CreateTodo = () => {
     }));
   };
 
-  const handleComplete = () => {
+  const handleStatus = ({ target }) => {
     setTodo((prev) => ({
       ...prev,
-      completed: !todo.completed,
+      completed: target.checked,
     }));
   };
 
@@ -71,44 +68,24 @@ const CreateTodo = () => {
       </div>
       <form className={styles.todoForm} onSubmit={handleSubmit}>
         <span>Create todo</span>
-        <TextField
-          fullWidth
-          label="NAME"
-          name="name"
-          variant="outlined"
+        <input onChange={handleChange} name="name" value={todo.name || ""} />
+        <input
           onChange={handleChange}
-          value={todo.name || ""}
-        />
-        <TextField
-          fullWidth
-          label="DESCRIPTION"
           name="description"
-          variant="outlined"
-          onChange={handleChange}
           value={todo.description || ""}
         />
-        <FormControlLabel
-          control={<Checkbox checked={todo.completed || false} />}
-          label="COMPLETED"
-          onClick={handleComplete}
-        />
+        <div className="checkboxWrapper">
+          <label htmlFor="status">Status</label>
+          <input
+            id="status"
+            type="checkbox"
+            defaultChecked={!!todo.completed}
+            onChange={handleStatus}
+          />
+        </div>
         <div className={styles.formOptions}>
-          <Button
-            variant="outlined"
-            color="warning"
-            sx={{ width: 200, mx: 3 }}
-            onClick={() => navigate("/")}
-          >
-            back
-          </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            sx={{ width: 200, mx: 3 }}
-            type="submit"
-          >
-            create
-          </Button>
+          <button onClick={() => navigate("/")}>back</button>
+          <button type="submit">create</button>
         </div>
       </form>
     </div>

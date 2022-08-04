@@ -1,20 +1,41 @@
 .heading {
-  height: 50px;
-  width: 250px;
-  margin: 50px auto;
-  padding: 5px 10px;
+  justify-self: center;
+  width: max-content;
+  font-size: 2.1em;
+  font-weight: 700;
+  margin: auto;
+  margin-top: 25px;
+  position: relative;
+}
+.heading::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  top: 100%;
+  height: 4px;
+  background: linear-gradient(130deg, #ff7a18, #af002d 41.07%, #319197 76.05%);
+}
+
+#create {
+  position: fixed;
+  top: 80%;
+  right: 50px;
+  width: 80px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: hsl(201, 96%, 50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  text-transform: uppercase;
-  font-size: 2rem;
-  font-weight: 600;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px,
-    rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  cursor: pointer;
+  z-index: 999;
+  transition: 0.2s ease-in;
 }
 
-#fabContainer {
-  position: fixed;
-  top: 75%;
-  right: 50px;
+#create:hover {
+  background-color: hsl(201, 96%, 40%);
+}
+
+#create > img {
+  width: 40%;
 }
