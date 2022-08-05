@@ -12,6 +12,7 @@ import { useParams, useNavigate } from "react-router-dom";
 const ManageTodo = () => {
   const [todo, setTodo] = useState({});
   const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const params = useParams();
   const navigate = useNavigate();
@@ -47,16 +48,21 @@ const ManageTodo = () => {
 
   const changeOpen = () => setOpen(!open);
 
-  const handleUpdate = () => {
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    setIsActive(true);
     const updateTodo = async () => {
       try {
         const response = await axios.patch(`/api/v1/todo/${id}`, todo);
+        setIsActive(false);
         setResponse((prev) => ({
           ...prev,
           msg: response.data.msg,
           severity: "success",
         }));
       } catch (error) {
+        setIsActive(false);
         setResponse((prev) => ({
           ...prev,
           msg: error.message,
@@ -68,16 +74,12 @@ const ManageTodo = () => {
     updateTodo();
   };
 
-  const handleDelete = () => {
+  const handleDelete = (e) => {
+    e.preventDefault();
     const deleteTodo = async () => {
       try {
-        const response = await axios.delete(`/api/v1/todo/${id}`);
-        console.log(response.data.msg);
-        setResponse((prev) => ({
-          ...prev,
-          msg: response.data.msg,
-          severity: "success",
-        }));
+        await axios.delete(`/api/v1/todo/${id}`);
+        navigate("/");
       } catch (error) {
         setResponse((prev) => ({
           ...prev,
@@ -86,9 +88,6 @@ const ManageTodo = () => {
         }));
       }
       setOpen(true);
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
     };
     deleteTodo();
   };
@@ -102,24 +101,29 @@ const ManageTodo = () => {
   }
   return (
     <div className={styles.todoFormContainer}>
-      <div className={styles.alertContainer}>
-        <AsyncAlert
-          message={response.msg}
-          severity={response.severity}
-          open={open}
-          changeOpen={changeOpen}
-        />
-      </div>
+      <AsyncAlert
+        message={response.msg}
+        severity={response.severity}
+        open={open}
+        changeOpen={changeOpen}
+      />
       <form className={styles.todoForm}>
-        <span>Update or delete todo</span>
-        <input name="name" onChange={handleChange} value={todo.name} />
+        <span>Manage todo</span>
+        <input
+          name="name"
+          onChange={handleChange}
+          value={todo.name || ""}
+          required
+        />
         <textarea
           name="description"
           onChange={handleChange}
-          value={todo.description}
+          value={todo.description || ""}
+          rows="3"
+          required
         ></textarea>
-        <div className="checkboxWrapper">
-          <label htmlFor="status">Status</label>
+        <div className={styles.checkboxWrapper}>
+          <label htmlFor="status">Status: </label>
           <input
             id="status"
             type="checkbox"
@@ -128,8 +132,16 @@ const ManageTodo = () => {
           />
         </div>
         <div className={styles.formOptions}>
-          <button onClick={handleDelete}>delete</button>
-          <button onClick={handleUpdate}>update</button>
+          <button
+            onClick={handleDelete}
+            className={styles.delete}
+            disabled={isActive}
+          >
+            Delete
+          </button>
+          <button onClick={handleUpdate} disabled={isActive}>
+            Update
+          </button>
         </div>
       </form>
     </div>

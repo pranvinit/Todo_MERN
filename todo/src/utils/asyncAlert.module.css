@@ -1,0 +1,30 @@
+.alert {
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.alert.collapse {
+  display: none;
+}
+
+.success {
+  background-color: #cdff90;
+}
+
+.error {
+  background-color: #f28b82;
+}
+
+.alert > img {
+  width: 30px;
+}
+
+.alert > :nth-of-type(2) {
+  margin-left: 50px;
+  width: 20px;
+  cursor: pointer;
+}

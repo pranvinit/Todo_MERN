@@ -1,25 +1,18 @@
-import React from "react";
-
+import styles from "./asyncAlert.module.css";
 const AsyncAlert = ({ message, severity, open, changeOpen }) => {
   return (
-    <div>Alert</div>
-    // <Collapse in={open}>
-    //   <Alert
-    //     severity={severity}
-    //     action={
-    //       <IconButton
-    //         aria-label="close"
-    //         color="inherit"
-    //         size="small"
-    //         onClick={() => changeOpen(false)}
-    //       >
-    //         <Close />
-    //       </IconButton>
-    //     }
-    //   >
-    //     {message}
-    //   </Alert>
-    // </Collapse>
+    <div
+      className={`${styles.alert} ${!open && styles.collapse} ${
+        severity === "success" ? styles.success : styles.error
+      }`}
+    >
+      <img
+        src={`/assets/${severity === "success" ? "success" : "error"}.png`}
+        alt={severity}
+      />
+      <span>{message}</span>
+      <img src="/assets/close.png" alt="close" onClick={() => changeOpen()} />
+    </div>
   );
 };
 export default AsyncAlert;

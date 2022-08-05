@@ -1,21 +1,29 @@
 .todoLink {
   text-decoration: none;
   color: #000;
+  width: 50%;
+  justify-self: center;
 }
 
 .todo {
   position: relative;
   background: #fff;
-  width: 60%;
-  height: 70%;
-  padding: 10px;
+  height: 100%;
   border-radius: 10px;
-  margin: 50px auto;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   cursor: pointer;
   transition: all 200ms linear;
+  justify-self: center;
+}
+
+.wrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  cursor: pointer;
 }
 
 .todo:hover {

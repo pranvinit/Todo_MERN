@@ -13,20 +13,24 @@ const CreateTodo = () => {
 
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
   const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     const createTodo = async () => {
       try {
-        const response = await axios.post("/api/v1/todo", todo);
+        const response = await axios.post("/api/v1/todo", { ...todo });
+        setLoading(false);
         setResponse((prev) => ({
           ...prev,
           msg: response.data.msg,
           severity: "success",
         }));
       } catch (error) {
+        setLoading(false);
         setResponse((prev) => ({
           ...prev,
           msg: error.message,
@@ -58,24 +62,31 @@ const CreateTodo = () => {
 
   return (
     <div className={styles.todoFormContainer}>
-      <div className={styles.alertContainer}>
-        <AsyncAlert
-          message={response.msg}
-          severity={response.severity}
-          open={open}
-          changeOpen={changeOpen}
-        />
-      </div>
+      <AsyncAlert
+        message={response.msg}
+        severity={response.severity}
+        open={open}
+        changeOpen={changeOpen}
+      />
       <form className={styles.todoForm} onSubmit={handleSubmit}>
         <span>Create todo</span>
-        <input onChange={handleChange} name="name" value={todo.name || ""} />
         <input
           onChange={handleChange}
+          placeholder="Name"
+          name="name"
+          value={todo.name || ""}
+          required
+        />
+        <textarea
+          onChange={handleChange}
+          placeholder="Description"
           name="description"
           value={todo.description || ""}
-        />
-        <div className="checkboxWrapper">
-          <label htmlFor="status">Status</label>
+          required
+          rows="3"
+        ></textarea>
+        <div className={styles.checkboxWrapper}>
+          <label htmlFor="status">Status: </label>
           <input
             id="status"
             type="checkbox"
@@ -84,8 +95,12 @@ const CreateTodo = () => {
           />
         </div>
         <div className={styles.formOptions}>
-          <button onClick={() => navigate("/")}>back</button>
-          <button type="submit">create</button>
+          <button className={styles.cancel} onClick={() => navigate("/")}>
+            Back
+          </button>
+          <button type="submit" disabled={loading}>
+            Create
+          </button>
         </div>
       </form>
     </div>

@@ -14,12 +14,14 @@ const SingleTodo = ({ name, description, completed, _id }) => {
   return (
     <Link to={`/todo/${_id}`} className={styles.todoLink}>
       <div className={styles.todo}>
-        <span ref={todoName}>{name}</span>
-        <div>
-          <span>{description}</span>
-          <span id={styles.todoStatus}>
-            status: {completed ? "completed" : "not completed"}
-          </span>
+        <div className={styles.wrapper}>
+          <span ref={todoName}>{name}</span>
+          <div>
+            <span>{description}</span>
+            <span id={styles.todoStatus}>
+              status: {completed ? "completed" : "not completed"}
+            </span>
+          </div>
         </div>
       </div>
     </Link>
